@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- Essential viewport meta tag for responsive design -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Flutter Context Menu Demo">
+
+  <!-- iOS meta tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Context Menu Demo">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png">
+
+  <title>Flutter Context Menu</title>
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Flutter Web Runtime -->
+  <script>
+    var serviceWorkerVersion = null;
+  </script>
+  <script src="flutter.js" defer></script>
+
+  <!-- Disable browser zooming (optional) -->
+  <style>
+    body {
+      touch-action: manipulation;
+      overscroll-behavior-y: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    #flutter_host {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    window.addEventListener('load', function(ev) {
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: async function(engineInitializer) {
+          let appRunner = await engineInitializer.initializeEngine();
+          await appRunner.runApp();
+        }
+      });
+    });
+  </script>
+  
+  <div id="flutter_host"></div>
+  
+  <!-- Double protection against default context menu -->
+  <script>
+    document.addEventListener('contextmenu', function(e) {
+      if (e.target.id !== 'flutter_host') {
+        e.preventDefault();
+      }
+    }, { capture: true });
+  </script>
+</body>
+</html>
